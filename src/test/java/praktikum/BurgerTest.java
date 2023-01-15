@@ -1,8 +1,6 @@
 package praktikum;
 
 import org.junit.Test;
-
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -17,7 +15,6 @@ public class BurgerTest {
     Ingredient ingredientSecond = new Ingredient(SAUCE, "Помидор", 200);
     Ingredient ingredientThird = new Ingredient(FILLING, "Редис", 300);
 
-
     @Test
     public void checkAddIngredientOnIngredientList() {
         burger.addIngredient(ingredientFirst);
@@ -25,7 +22,7 @@ public class BurgerTest {
         burger.addIngredient(ingredientThird);
         assertEquals(ingredientFirst, burger.ingredients.get(0));
         assertEquals(ingredientSecond, burger.ingredients.get(1));
-        assertEquals(ingredientThird , burger.ingredients.get(2));
+        assertEquals(ingredientThird, burger.ingredients.get(2));
     }
 
     @Test
@@ -42,7 +39,7 @@ public class BurgerTest {
         burger.addIngredient(ingredientFirst);
         burger.addIngredient(ingredientSecond);
         burger.addIngredient(ingredientThird);
-        burger.moveIngredient(1,2);
+        burger.moveIngredient(1, 2);
         assertEquals(ingredientThird, burger.ingredients.get(1));
         assertEquals(ingredientSecond, burger.ingredients.get(2));
     }
@@ -55,7 +52,7 @@ public class BurgerTest {
     }
 
     @Test
-    public void getSumPriceTest(){
+    public void getSumPriceTest() {
         burger.addIngredient(ingredientFirst);
         burger.addIngredient(ingredientSecond);
         burger.addIngredient(ingredientThird);
@@ -65,12 +62,11 @@ public class BurgerTest {
 
     @Test
     public void getReceipt() throws IOException {
+        String reference = Files.readString(Paths.get("src/test/java/praktikum/Recept"));
         burger.addIngredient(ingredientFirst);
         burger.addIngredient(ingredientSecond);
         burger.addIngredient(ingredientThird);
         burger.setBuns(new Bun("Булочка с корицей", 100));
-
-        String reference = Files.readString(Paths.get("src/test/java/praktikum/Recept"));
         String actual = burger.getReceipt();
         assertEquals(reference, actual);
     }
