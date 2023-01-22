@@ -1,6 +1,11 @@
 package praktikum;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,7 +14,14 @@ import static org.junit.Assert.*;
 import static praktikum.IngredientType.SAUCE;
 import static praktikum.IngredientType.FILLING;
 
+
+@RunWith(MockitoJUnitRunner.class)
 public class BurgerTest {
+    @Mock
+    Bun bun;
+    @Mock
+    Ingredient ingredient;
+
     Burger burger = new Burger();
     Ingredient ingredientFirst = new Ingredient(SAUCE, "Редька", 100);
     Ingredient ingredientSecond = new Ingredient(SAUCE, "Помидор", 200);
@@ -53,11 +65,14 @@ public class BurgerTest {
 
     @Test
     public void getSumPriceTest() {
-        burger.addIngredient(ingredientFirst);
-        burger.addIngredient(ingredientSecond);
-        burger.addIngredient(ingredientThird);
-        burger.setBuns(new Bun("Булочка с корицей", 100));
-        assertEquals(800, burger.getPrice(), 0.00001);
+        Mockito.when(bun.getPrice()).thenReturn(10f);
+        Mockito.when(ingredient.getPrice()).thenReturn(10f);
+
+        burger.setBuns(bun);
+        burger.addIngredient(ingredient);
+        float actual = burger.getPrice();
+        float expected = 30f;
+        assertEquals(expected, actual, 0.00001);
     }
 
     @Test
